@@ -147,9 +147,10 @@ function Sky({ stormProgress }) {
     <>
     <SkyImpl
     sunPosition={sunPosition}
-    turbidity={10 + stormProgress * 10}
-    rayleigh={Math.max(0.1, 1 - stormProgress)}
-    mieCoefficient={0.005 + stormProgress * 0.02}
+    turbidity={10 + stormProgress * 5}
+    rayleigh={Math.max(0.1, 1 - stormProgress * 0.8)}
+    inclination={inclination}
+    mieCoefficient={0.005 + stormProgress * 0.05}
     mieDirectionalG={0.8}
     />
       <group ref={ref}>
@@ -160,7 +161,7 @@ function Sky({ stormProgress }) {
           opacity={0.5 + stormProgress * 0.5}
           >
             <Cloud ref={cloud0} {...config} bounds={[x, y, z]} />
-            <Cloud concentrate="outside" growth={100} color="#ffccdd" opacity={0.3 + stormProgress * 0.7} seed={0.3} bounds={200} volume={200 + stormProgress} />
+            <Cloud concentrate="outside" growth={100} color="#ffccdd" opacity={0.3 + stormProgress * 0.7} seed={0.3} bounds={200} volume={200 + stormProgress * 90} />
         </Clouds>
         <Rain stormProgress={stormProgress} />
       </group>
