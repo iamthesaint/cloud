@@ -10,30 +10,40 @@ import gsap from "gsap"
 export default function App() {
 
   const [ stormProgress, setStormProgress ] = useState(0) // progression of storm as user enters site (0=sunny, 1=stormy)
+  const [ isStormy, setIsStormy ] = useState(false) // storm toggle
   
   const stormProgressRef = useRef(0)
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setStormProgress((prev) => Math.min(prev + 0.01, 1))
-    }, 80) 
-    return () => clearInterval(interval) 
-  }, [])
-
-  useEffect(() => {
-    const obj = { value: 0 }
+    const obj = { value: stormProgress }
     gsap.to(obj, {
-      value: 1,
-      duration: 15,
+      value: isStormy ? 1 : 0,
+      duration: 3, 
       ease: "power1.inOut",
       onUpdate: () => {
         setStormProgress(obj.value)
-      }
+      },
     })
-  }, [])
+    }, [isStormy])
 
+  //* App & Overlay
 
-  return <>
+  return (
+    <>
+    <button
+        style={{
+          position: "absolute",
+          fontFamily: "Bebas Neue, sans-serif",
+          fontSize: "20px",
+          top: "20px",
+          left: "20px",
+          zIndex: 10,
+          padding: "10px 20px",
+        }}
+        onClick={() => setIsStormy((prev) => !prev)}
+      >
+        {isStormy ? "Switch to Sunny" : "Switch to Stormy"}
+      </button>
     <Canvas shadows camera={{ position: [20, 10, 20], fov: 70 }} >
       <Sky stormProgress={stormProgress} />
       <ambientLight intensity={1 - stormProgress * 0.5} />
@@ -43,17 +53,19 @@ export default function App() {
       <CameraControls />
     </Canvas>
     </>
+  )
 }
 
+//* Rain
 
 function Rain({ stormProgress }) {
   const rainRef = useRef()
 
   const { rainCount, rainSize, rainArea, rainSpeed } = useControls({
-    rainCount: { value: 5000, min: 100, max: 50000, step: 100 },
-    rainSize: { value: 1, min: 0.01, max: 5, step: 0.01 },
-    rainArea: { value: 500, min: 50, max: 1500, step: 10 },
-    rainSpeed: { value: 1.5, min: 0.1, max: 5, step: 0.1 },
+    rainCount: { value: 15000, min: 100, max: 50000, step: 100 },
+    rainSize: { value: 0.5, min: 0.01, max: 5, step: 0.01 },
+    rainArea: { value: 800, min: 50, max: 1500, step: 10 },
+    rainSpeed: { value: 2.5, min: 0.1, max: 5, step: 0.1 },
   })
 
   const drops = useMemo(() => {
@@ -94,7 +106,7 @@ function Rain({ stormProgress }) {
       <meshStandardMaterial
         color={"#a0c4ff"}
         emissive={"#a0c4ff"}
-        emissiveIntensity={0.3}
+        emissiveIntensity={0.5}
         transparent
         opacity={Math.min(1, 0.8 * stormProgress + 0.2)}
         roughness={0.5}
@@ -103,6 +115,8 @@ function Rain({ stormProgress }) {
     </instancedMesh>
   )
 }
+
+//* Sky
 
 function Sky({ stormProgress }) {
   const ref = useRef()
@@ -118,11 +132,12 @@ function Sky({ stormProgress }) {
     x: { value: 5, min: 0, max: 100, step: 1 },
     y: { value: 1, min: 0, max: 100, step: 1 },
     z: { value: 1, min: 0, max: 100, step: 1 },
-    azimuth: { value: 0.25, min: 0, max: 1, step: 0.01 },
+    azimuth: { value: 0.3, min: 0, max: 1, step: 0.01 },
     inclination: { value: 0.45, min: 0, max: 1, step: 0.01 },
     brightness: { value: 0.5, min: 0, max: 1, step: 0.01 },
     // color: "#D6DDE0",
   })
+
 
   const sunPosition = useMemo(() => {
     const theta = Math.PI * inclination // vert angle
@@ -142,16 +157,18 @@ function Sky({ stormProgress }) {
 
   })
 
+  //* Clouds
 
   return (
     <>
     <SkyImpl
     sunPosition={sunPosition}
-    turbidity={10 + stormProgress * 5}
-    rayleigh={Math.max(0.1, 1 - stormProgress * 0.8)}
+    turbidity={15 + stormProgress * 10}
+    rayleigh={Math.max(0.05, 1 - stormProgress * 0.5)}
     inclination={inclination}
-    mieCoefficient={0.005 + stormProgress * 0.05}
-    mieDirectionalG={0.8}
+    mieCoefficient={0.01 + stormProgress * 0.05}
+    mieDirectionalG={1}
+    brightness={1 + stormProgress * 0.8}
     />
       <group ref={ref}>
         <Clouds
@@ -161,7 +178,7 @@ function Sky({ stormProgress }) {
           opacity={0.5 + stormProgress * 0.5}
           >
             <Cloud ref={cloud0} {...config} bounds={[x, y, z]} />
-            <Cloud concentrate="outside" growth={100} color="#ffccdd" opacity={0.3 + stormProgress * 0.7} seed={0.3} bounds={200} volume={200 + stormProgress * 90} />
+            <Cloud concentrate="outside" growth={100} color="#ffccdd" opacity={0.3 + stormProgress * 0.7} seed={0.3} bounds={200} volume={200 + stormProgress * 50} />
         </Clouds>
         <Rain stormProgress={stormProgress} />
       </group>
