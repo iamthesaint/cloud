@@ -7,6 +7,8 @@ body,
   width: 100%;
   height: 100%;
   background: #E0C9D1;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 .landing-page {

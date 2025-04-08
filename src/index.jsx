@@ -2,6 +2,7 @@ import './style.css'
 import ReactDOM from 'react-dom/client'
 import { useState } from 'react'
 import App from './App.jsx'
+import ScrollContainer from './ScrollContainer.jsx'
 
 function Main() {
   const [showApp, setShowApp] = useState(false)
