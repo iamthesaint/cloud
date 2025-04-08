@@ -1,0 +1,42 @@
+html,
+body,
+#root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #E0C9D1;
+}
+
+.landing-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #E0C9D1;
+  text-align: center;
+  transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+}
+
+.landing-page.fade-out {
+  opacity: 0;
+  transform: scale(1.2); 
+  pointer-events: none; 
+}
+
+.landing-page button {
+  font-family: Bebas Neue;
+  font-size: 5rem;
+  color: #000000;
+  -webkit-text-stroke: 2px white;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.landing-page button:hover {
+  color: white;
+  -webkit-text-stroke: 2px black;
+}
