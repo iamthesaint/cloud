@@ -37,7 +37,7 @@ export default function Name() {
     ref={nameRef}
     style={{
       position: 'absolute',
-      top: '20%',
+      top: '30%',
       left: '50%',
       transform: 'translate(-50%, -50%)',
       fontSize: '50vw',

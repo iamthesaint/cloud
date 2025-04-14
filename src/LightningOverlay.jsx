@@ -1,38 +1,9 @@
-import { useRef, useEffect } from 'react'
-import gsap from 'gsap'
+import { forwardRef } from 'react'
 
-export default function LightningOverlay() {
-  const flashRef = useRef()
-
-  useEffect(() => {
-    const flash = flashRef.current
-    const timeline = gsap.timeline({ delay: 2 })
-
-    timeline
-      .to(flash, {
-        opacity: 1,
-        duration: 0.1,
-        ease: 'power4.out',
-      })
-      .to(flash, {
-        opacity: 0,
-        duration: 0.01,
-        ease: 'power4.in',
-      })
-      .to(flash, {
-        opacity: 0.8,
-        duration: 0.05,
-      })
-      .to(flash, {
-        opacity: 0,
-        duration: 0.25,
-      })
-
-  }, [])
-
+const LightningOverlay = forwardRef((props, ref) => {
   return (
     <div
-      ref={flashRef}
+      ref={ref}
       style={{
         position: 'absolute',
         top: 0,
@@ -46,4 +17,6 @@ export default function LightningOverlay() {
       }}
     />
   )
-}
+})
+
+export default LightningOverlay

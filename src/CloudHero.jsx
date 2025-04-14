@@ -8,11 +8,12 @@ import LightningOverlay from './LightningOverlay.jsx'
 export default function CloudHero() {
   const [stormProgress, setStormProgress] = useState(0)
   const [isStormy, setIsStormy] = useState(false)
+  const lightningRef = useRef()
 
   // lightning > stormy on mount
   useEffect(() => {
     const triggerLightningAndStorm = () => {
-      const flash = document.querySelector('.lightning-overlay')
+      const flash = lightningRef.current
       const obj = { value: 0 }
 
       const timeline = gsap.timeline()
@@ -22,6 +23,7 @@ export default function CloudHero() {
           opacity: 1,
           duration: 0.1,
           ease: 'power4.out',
+          delay: 2,
         })
         .to(flash, {
           opacity: 0,
@@ -70,8 +72,8 @@ export default function CloudHero() {
 
 
   return (
-    <div className="cloud-hero" style={{ position: 'relative', height: '200vh', width: '100vw' }}>
-      <LightningOverlay />
+    <div className="cloud-hero" style={{ position: 'relative', height: '100vh', width: '100vw' }}>
+      <LightningOverlay ref={lightningRef} />
       <button
         onClick={() => setIsStormy((prev) => !prev)}
         style={{
