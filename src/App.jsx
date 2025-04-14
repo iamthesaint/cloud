@@ -1,5 +1,6 @@
 import CloudHero from '/CloudHero.jsx'
 import About from '/About.jsx'
+import Name from '/Name.jsx'
 
 export default function App() {
   
@@ -8,6 +9,7 @@ export default function App() {
       <section id="hero" style={{ height: '200vh' }} >
         <CloudHero />
         </section>
+      <Name />
         <section id="about-section" >
         <About />
       </section >

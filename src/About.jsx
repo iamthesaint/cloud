@@ -6,7 +6,6 @@ gsap.registerPlugin(ScrollTrigger)
 
 export default function About() {
   const sectionRef = useRef()
-  const nameRef = useRef()
   const blurbRef = useRef()
 
   useEffect(() => {
@@ -22,17 +21,18 @@ export default function About() {
         },
       })
 
-      tl.to(nameRef.current, { x: "-60vw", duration: 1, ease: "power2.out" })
-      tl.fromTo(
-        blurbRef.current,
-        { x: "40vw", opacity: 0 },
-        { x: "0vw", opacity: 1, duration: 1, ease: "power2.out" },
-        "-+0.5"
-      )
+      tl.to(blurbRef.current, {
+        opacity: 1,
+        duration: 1,
+        ease: 'power2.out',
+      })
     }, sectionRef)
+    
 
     return () => ctx.revert()
   }, [])
+
+
 
   return (
     <section
@@ -51,18 +51,6 @@ export default function About() {
       }}
     >
       <div style={{ display: 'flex', width: '100vw', position: 'relative' }}>
-        <h1
-          ref={nameRef}
-          style={{
-            fontSize: '10vw',
-            marginRight: '2rem',
-            whiteSpace: 'nowrap',
-            position: 'absolute',
-            left: 0,
-          }}
-        >
-          Steph St.Hilaire
-        </h1>
         <p
           ref={blurbRef}
           style={{

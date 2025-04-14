@@ -3,11 +3,59 @@ import { useRef, useMemo, useEffect, useState, Suspense } from 'react'
 import { useFrame, Canvas } from '@react-three/fiber'
 import { Clouds, Cloud, Sky as SkyImpl } from '@react-three/drei'
 import gsap from 'gsap'
+import LightningOverlay from './LightningOverlay.jsx'
 
 export default function CloudHero() {
   const [stormProgress, setStormProgress] = useState(0)
   const [isStormy, setIsStormy] = useState(false)
 
+  // lightning > stormy on mount
+  useEffect(() => {
+    const triggerLightningAndStorm = () => {
+      const flash = document.querySelector('.lightning-overlay')
+      const obj = { value: 0 }
+
+      const timeline = gsap.timeline()
+
+      timeline
+        .to(flash, {
+          opacity: 1,
+          duration: 0.1,
+          ease: 'power4.out',
+        })
+        .to(flash, {
+          opacity: 0,
+          duration: 0.01,
+          ease: 'power4.in',
+        })
+        .to(flash, {
+          opacity: 0.8,
+          duration: 0.05,
+        })
+        .to(flash, {
+          opacity: 0,
+          duration: 0.25,
+          onComplete: () => {
+     
+            gsap.to(obj, {
+              value: 1,
+              duration: 6,
+              ease: 'power1.inOut',
+              onUpdate: () => {
+                setStormProgress(obj.value)
+              },
+              onComplete: () => {
+                setIsStormy(true)
+              },
+            })
+          },
+        })
+    }
+
+    triggerLightningAndStorm()
+  }, [])
+
+  // toggle stormy
   useEffect(() => {
     const obj = { value: stormProgress }
     gsap.to(obj, {
@@ -23,14 +71,17 @@ export default function CloudHero() {
 
   return (
     <div className="cloud-hero" style={{ position: 'relative', height: '200vh', width: '100vw' }}>
+      <LightningOverlay />
       <button
         onClick={() => setIsStormy((prev) => !prev)}
         style={{
           position: 'absolute',
           top: '20px',
-          left: '20px',
+          right: '20px',
           zIndex: 10,
           padding: '10px 20px',
+          backgroundColor: 'transparent',
+          border: 'none',
           fontSize: '20px',
           fontFamily: 'Bebas Neue, sans-serif',
         }}
@@ -111,9 +162,9 @@ function Sky({ stormProgress }) {
 
 function Rain({ stormProgress }) {
   const rainRef = useRef()
-  const rainCount = 15000
+  const rainCount = 20000
   const rainSize = 0.5
-  const rainArea = 800
+  const rainArea = 750
   const rainSpeed = 3
 
   const drops = useMemo(() => {
