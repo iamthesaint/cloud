@@ -1,8 +1,7 @@
-// components/CloudHero.jsx
 import * as THREE from 'three'
-import { useRef, useMemo, useEffect, useState } from 'react'
+import { useRef, useMemo, useEffect, useState, Suspense } from 'react'
 import { useFrame, Canvas } from '@react-three/fiber'
-import { Clouds, Cloud, CameraControls, Sky as SkyImpl } from '@react-three/drei'
+import { Clouds, Cloud, Sky as SkyImpl } from '@react-three/drei'
 import gsap from 'gsap'
 
 export default function CloudHero() {
@@ -21,8 +20,9 @@ export default function CloudHero() {
     })
   }, [isStormy])
 
+
   return (
-    <div className="cloud-hero" style={{ position: 'relative', height: '100vh', width: '100vw' }}>
+    <div className="cloud-hero" style={{ position: 'relative', height: '200vh', width: '100vw' }}>
       <button
         onClick={() => setIsStormy((prev) => !prev)}
         style={{
@@ -38,7 +38,10 @@ export default function CloudHero() {
         {isStormy ? 'Switch to Sunny' : 'Switch to Stormy'}
       </button>
 
-      <Canvas shadows camera={{ position: [20, 10, 20], fov: 70 }}>
+      <Canvas
+      style={{ position: 'fixed', top: 0, left: 0, zIndex: 0 }}
+      shadows
+      camera={{ position: [20, 10, 20], fov: 100 }} >
         <Sky stormProgress={stormProgress} />
         <ambientLight intensity={1 - stormProgress * 0.5} />
         <spotLight position={[0, 10, 0]} decay={0} distance={45} penumbra={-1} intensity={10} />

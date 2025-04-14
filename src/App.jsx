@@ -2,14 +2,15 @@ import CloudHero from '/CloudHero.jsx'
 import About from '/About.jsx'
 
 export default function App() {
+  
   return (
     <div>
-      <section id="hero" style={{ height: '100vh' }}>
+      <section id="hero" style={{ height: '200vh' }} >
         <CloudHero />
         </section>
-        <section id="about" style={{ height: '100vh', backgroundColor: '#111', color: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <section id="about-section" >
         <About />
-      </section>
+      </section >
     </div>
   )
 }
