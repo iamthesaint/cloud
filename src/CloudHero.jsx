@@ -41,7 +41,7 @@ export default function CloudHero() {
      
             gsap.to(obj, {
               value: 1,
-              duration: 6,
+              duration: 4,
               ease: 'power1.inOut',
               onUpdate: () => {
                 setStormProgress(obj.value)
@@ -72,7 +72,7 @@ export default function CloudHero() {
 
 
   return (
-    <div className="cloud-hero" style={{ position: 'relative', height: '100vh', width: '100vw' }}>
+    <div className="cloud-hero" style={{ position: 'relative', height: '70vh', width: '100vw' }}>
       <LightningOverlay ref={lightningRef} />
       <button
         onClick={() => setIsStormy((prev) => !prev)}
@@ -101,6 +101,7 @@ export default function CloudHero() {
         <spotLight position={[-50, 0, 10]} color="red" angle={0.15} decay={0} penumbra={-5} intensity={20} />
         <spotLight position={[50, -10, 10]} color="red" angle={0.4} decay={0} penumbra={-1} intensity={30} />
         {/* <CameraControls /> */}
+
       </Canvas>
     </div>
   )

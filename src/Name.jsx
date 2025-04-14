@@ -1,5 +1,6 @@
 import { useRef, useEffect } from 'react'
 import gsap from 'gsap'
+import Social from './Social.jsx'
 
 export default function Name() {
   const nameRef = useRef()
@@ -33,24 +34,29 @@ export default function Name() {
   }, [])
 
   return (
+    <>
     <div
-    ref={nameRef}
-    style={{
-      position: 'absolute',
-      top: '30%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
-      fontSize: '50vw',
-      fontFamily: 'Bebas Neue, sans-serif',
-      color: '#000000',
-      zIndex: 10,
-      pointerEvents: 'none',
-      whiteSpace: 'nowrap',
-      width: 'fit-content',
-      opacity: 0,
-    }}
+      ref={nameRef}
+      style={{
+        position: 'absolute',
+        top: '30%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        fontSize: '50vw',
+        fontFamily: 'Bebas Neue, sans-serif',
+        color: '#000000',
+        zIndex: 10,
+        pointerEvents: 'none',
+        whiteSpace: 'nowrap',
+        width: 'fit-content',
+        opacity: 0,
+      }}
     >
       Steph St.Hilaire
     </div>
+    <div className="social-container">
+      <Social />
+    </div>
+    </>
   )
 }
