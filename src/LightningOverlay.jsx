@@ -10,7 +10,7 @@ const LightningOverlay = forwardRef((props, ref) => {
         left: 0,
         width: '100vw',
         height: '100vh',
-        backgroundColor: '#fff',
+        backgroundColor: '#fffdd8',
         opacity: 0,
         zIndex: 20,
         pointerEvents: 'none',

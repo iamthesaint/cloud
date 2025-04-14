@@ -23,7 +23,7 @@ export default function CloudHero() {
           opacity: 1,
           duration: 0.1,
           ease: 'power4.out',
-          delay: 2,
+          delay: 4.5,
         })
         .to(flash, {
           opacity: 0,
