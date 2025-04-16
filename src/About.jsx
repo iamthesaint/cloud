@@ -132,7 +132,7 @@ export default function About() {
         fontFamily: 'Bebas Neue, sans-serif',
       }}
     >
-        <h1 style={{ fontSize: '5vw' }}>My Portfolio Projects</h1>
+        <h1 style={{ fontSize: '5vw' }}>My Projects</h1>
       </section>
       </>
   )

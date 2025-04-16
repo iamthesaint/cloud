@@ -1,62 +1,75 @@
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import gsap from 'gsap'
-import Social from './Social.jsx'
 
 export default function Name() {
   const nameRef = useRef()
-
+  const containerRef = useRef()
+  const [fontSize, setFontSize] = useState(100)
+  
   useEffect(() => {
-    // Animate the name fade-in
-    gsap.fromTo(
-      nameRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 3,
-        ease: 'power2.out',
+    const animateIn = () => {
+      gsap.fromTo(
+        nameRef.current,
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 2,
+          ease: 'power2.out',
+        }
+      )
+    }
+
+    const resizeText = () => {
+      const containerWidth = window.innerWidth * 0.95
+      let testSize = 100
+      nameRef.current.style.fontSize = `${testSize}px`
+
+      while (nameRef.current.offsetWidth < containerWidth && testSize < 1000) {
+        testSize += 1
+        nameRef.current.style.fontSize = `${testSize}px`
       }
-    )
 
-    const updateFontSize = () => {
-      const viewportWidth = window.innerWidth
-      const textLength = nameRef.current.textContent.length
-      const fontSize = viewportWidth / textLength * 3
-      nameRef.current.style.fontSize = `${fontSize}px`
+      while (nameRef.current.offsetWidth > containerWidth && testSize > 0) {
+        testSize -= 1
+        nameRef.current.style.fontSize = `${testSize}px`
+      }
+
+      setFontSize(testSize)
     }
 
-    updateFontSize()
-    window.addEventListener('resize', updateFontSize)
+    resizeText()
+    animateIn()
 
-    return () => {
-      window.removeEventListener('resize', updateFontSize)
-    }
+    window.addEventListener('resize', resizeText)
+    return () => window.removeEventListener('resize', resizeText)
   }, [])
 
   return (
-    <>
     <div
-      ref={nameRef}
+      ref={containerRef}
       style={{
         position: 'absolute',
-        top: '30%',
+        top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        fontSize: '50vw',
-        fontFamily: 'Bebas Neue, sans-serif',
-        color: '#000000',
         zIndex: 10,
         pointerEvents: 'none',
         whiteSpace: 'nowrap',
-        width: 'fit-content',
-        opacity: 0,
+        textAlign: 'center',
       }}
     >
-      Steph St.Hilaire
+      <div
+        ref={nameRef}
+        style={{
+          fontSize: `${fontSize}px`,
+          fontFamily: 'Bebas Neue, sans-serif',
+          color: '#000',
+          opacity: 0,
+        }}
+      >
+        Steph St.Hilaire
+      </div>
     </div>
-    <div className="social-container">
-      <Social />
-    </div>
-    </>
   )
 }

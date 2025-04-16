@@ -1,4 +1,3 @@
-
 import instagram from "/img/Instagram_Glyph_Black.png"
 import linkedin from "/img/LI-In-Bug.png"
 import github from "/img/github-mark.png"
