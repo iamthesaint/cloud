@@ -1,14 +1,14 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import './style.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
-export default function About() {
+export default function About({ portfolioRef }) {
   const sectionRef = useRef()
   const blurbRef = useRef()
   const containerRef = useRef()
-  const portfolioRef = useRef()
   const arrowRef = useRef()
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export default function About() {
     }, sectionRef)
 
     return () => ctx.revert()
-  }, [])
+  }, [portfolioRef])
 
 
   return (
@@ -61,7 +61,8 @@ export default function About() {
         overflow: 'hidden',
         background: '#111',
         color: '#fff',
-        fontFamily: 'Bebas Neue, sans-serif',
+        fontFamily: 'Oswald, sans-serif',
+        textTransform: 'uppercase',
       }}
     >
       <div
@@ -81,7 +82,7 @@ export default function About() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: '0 10vw',
+            padding: '0 2vw',
           }}
         >
           <p
@@ -98,7 +99,7 @@ export default function About() {
         {/* Section 2 */}
         <div
           style={{
-            minWidth: '100vw',
+            minWidth: '70vw',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -109,7 +110,7 @@ export default function About() {
           style={{
             position: 'absolute',
             fontSize: '15vw',
-            bottom: '10%',
+            padding: '10%',
             color: '#fff',
             animation: 'bounce 1s infinite',
           }}
@@ -117,22 +118,21 @@ export default function About() {
           ↓
         </div>
         </div>
-      </div>
+        </div>
     </section>
     <section
       ref={portfolioRef}
       style={{
-        height: '100vh',
-        width: '100vw',
-        background: '#222',
-        color: '#fff',
+        height: '2vw',
+        width: '45vw',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        fontFamily: 'Bebas Neue, sans-serif',
+        background: '#111',
+        color: '#fff',
+        fontFamily: 'Oswald, sans-serif',
       }}
     >
-        <h1 style={{ fontSize: '5vw' }}>My Projects</h1>
       </section>
       </>
   )

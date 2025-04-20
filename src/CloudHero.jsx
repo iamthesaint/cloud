@@ -75,17 +75,22 @@ export default function CloudHero() {
     <div className="cloud-hero" style={{ position: 'relative', height: '70vh', width: '100vw' }}>
       <LightningOverlay ref={lightningRef} />
       <button
+        className="storm-button"
         onClick={() => setIsStormy((prev) => !prev)}
         style={{
-          position: 'absolute',
+          position: 'fixed',
           top: '20px',
           right: '20px',
           zIndex: 10,
           padding: '10px 20px',
           backgroundColor: 'transparent',
           border: 'none',
-          fontSize: '20px',
-          fontFamily: 'Bebas Neue, sans-serif',
+          fontSize: '.8vw',
+          fontFamily: 'Arial, Helvetica, sans-serif',
+          textTransform: 'uppercase',
+          letterSpacing: '0.5em',
+          color: 'rgba(0, 0, 0, 0.4)',
+          fontWeight: '100',
         }}
       >
         {isStormy ? 'Switch to Sunny' : 'Switch to Stormy'}
@@ -95,13 +100,14 @@ export default function CloudHero() {
       style={{ position: 'fixed', top: 0, left: 0, zIndex: 0 }}
       shadows
       camera={{ position: [20, 10, 20], fov: 100 }} >
+        <Suspense fallback={null}>
         <Sky stormProgress={stormProgress} />
         <ambientLight intensity={1 - stormProgress * 0.5} />
         <spotLight position={[0, 10, 0]} decay={0} distance={45} penumbra={-1} intensity={10} />
         <spotLight position={[-50, 0, 10]} color="red" angle={0.15} decay={0} penumbra={-5} intensity={20} />
         <spotLight position={[50, -10, 10]} color="red" angle={0.4} decay={0} penumbra={-1} intensity={30} />
         {/* <CameraControls /> */}
-
+        </Suspense>
       </Canvas>
     </div>
   )

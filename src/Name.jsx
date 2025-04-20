@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from 'react'
 import gsap from 'gsap'
+import './style.css'
 
 export default function Name() {
   const nameRef = useRef()
@@ -46,30 +47,13 @@ export default function Name() {
   }, [])
 
   return (
-    <div
-      ref={containerRef}
-      style={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        zIndex: 10,
-        pointerEvents: 'none',
-        whiteSpace: 'nowrap',
-        textAlign: 'center',
-      }}
-    >
-      <div
-        ref={nameRef}
-        style={{
-          fontSize: `${fontSize}px`,
-          fontFamily: 'Bebas Neue, sans-serif',
-          color: '#000',
-          opacity: 0,
-        }}
-      >
-        Steph St.Hilaire
+    <div ref={containerRef} className="name-container">
+      <div ref={nameRef} className="name" data-text="STEPH ST.HILAIRE">
+        STEPH ST.HILAIRE
       </div>
+        <p className="subtitle">
+          creative developer
+        </p>
     </div>
   )
 }
