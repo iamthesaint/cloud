@@ -4,11 +4,14 @@ import { useFrame, Canvas } from '@react-three/fiber'
 import { Clouds, Cloud, Sky as SkyImpl } from '@react-three/drei'
 import gsap from 'gsap'
 import LightningOverlay from './LightningOverlay.jsx'
+import Projects from './Projects.jsx'
+import Model from './Model.jsx'
 
 export default function CloudHero() {
   const [stormProgress, setStormProgress] = useState(0)
   const [isStormy, setIsStormy] = useState(false)
   const lightningRef = useRef()
+  const projectsRef = useRef()
 
   // lightning > stormy on mount
   useEffect(() => {
@@ -81,7 +84,7 @@ export default function CloudHero() {
           position: 'fixed',
           top: '20px',
           right: '20px',
-          zIndex: 10,
+          zIndex: 20,
           padding: '10px 20px',
           backgroundColor: 'transparent',
           border: 'none',
@@ -100,6 +103,7 @@ export default function CloudHero() {
       style={{ position: 'fixed', top: 0, left: 0, zIndex: 0 }}
       shadows
       camera={{ position: [20, 10, 20], fov: 100 }} >
+        {/* <Model /> */}
         <Suspense fallback={null}>
         <Sky stormProgress={stormProgress} />
         <ambientLight intensity={1 - stormProgress * 0.5} />
@@ -108,6 +112,7 @@ export default function CloudHero() {
         <spotLight position={[50, -10, 10]} color="red" angle={0.4} decay={0} penumbra={-1} intensity={30} />
         {/* <CameraControls /> */}
         </Suspense>
+        <Projects />
       </Canvas>
     </div>
   )

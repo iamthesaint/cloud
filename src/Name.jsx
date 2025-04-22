@@ -4,8 +4,6 @@ import './style.css'
 
 export default function Name() {
   const nameRef = useRef()
-  const containerRef = useRef()
-  const [fontSize, setFontSize] = useState(100)
   
   useEffect(() => {
     const animateIn = () => {
@@ -20,40 +18,18 @@ export default function Name() {
         }
       )
     }
-
-    const resizeText = () => {
-      const containerWidth = window.innerWidth * 0.95
-      let testSize = 100
-      nameRef.current.style.fontSize = `${testSize}px`
-
-      while (nameRef.current.offsetWidth < containerWidth && testSize < 1000) {
-        testSize += 1
-        nameRef.current.style.fontSize = `${testSize}px`
-      }
-
-      while (nameRef.current.offsetWidth > containerWidth && testSize > 0) {
-        testSize -= 1
-        nameRef.current.style.fontSize = `${testSize}px`
-      }
-
-      setFontSize(testSize)
-    }
-
-    resizeText()
+  
     animateIn()
-
-    window.addEventListener('resize', resizeText)
-    return () => window.removeEventListener('resize', resizeText)
   }, [])
 
   return (
-    <div ref={containerRef} className="name-container">
+    <>
       <div ref={nameRef} className="name" data-text="STEPH ST.HILAIRE">
         STEPH ST.HILAIRE
       </div>
         <p className="subtitle">
           creative developer
         </p>
-    </div>
+    </>
   )
 }
