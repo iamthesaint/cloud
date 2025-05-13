@@ -1,17 +1,23 @@
 import * as THREE from 'three'
 import { useRef, useMemo, useEffect, useState, Suspense } from 'react'
 import { useFrame, Canvas } from '@react-three/fiber'
-import { Clouds, Cloud, Sky as SkyImpl } from '@react-three/drei'
+import { Clouds, Cloud, Sky as SkyImpl, CameraControls} from '@react-three/drei'
 import gsap from 'gsap'
 import LightningOverlay from './LightningOverlay.jsx'
-import Projects from './Projects.jsx'
-import Model from './Model.jsx'
 
 export default function CloudHero() {
   const [stormProgress, setStormProgress] = useState(0)
   const [isStormy, setIsStormy] = useState(false)
+  const [showButton, setShowButton] = useState(false)
   const lightningRef = useRef()
-  const projectsRef = useRef()
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowButton(true)
+    }, 10000)
+
+    return () => clearTimeout(timer)
+  }, [])
 
   // lightning > stormy on mount
   useEffect(() => {
@@ -51,6 +57,7 @@ export default function CloudHero() {
               },
               onComplete: () => {
                 setIsStormy(true)
+
               },
             })
           },
@@ -60,12 +67,13 @@ export default function CloudHero() {
     triggerLightningAndStorm()
   }, [])
 
+
   // toggle stormy
   useEffect(() => {
     const obj = { value: stormProgress }
     gsap.to(obj, {
       value: isStormy ? 1 : 0,
-      duration: 3,
+      duration: 2,
       ease: 'power1.inOut',
       onUpdate: () => {
         setStormProgress(obj.value)
@@ -75,20 +83,24 @@ export default function CloudHero() {
 
 
   return (
-    <div className="cloud-hero" style={{ position: 'relative', height: '70vh', width: '100vw' }}>
+    <div className="hero">
       <LightningOverlay ref={lightningRef} />
+      {showButton && (
       <button
         className="storm-button"
         onClick={() => setIsStormy((prev) => !prev)}
         style={{
           position: 'fixed',
           top: '20px',
-          right: '20px',
+          display: 'flex',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          cursor: 'pointer',
           zIndex: 20,
           padding: '10px 20px',
           backgroundColor: 'transparent',
           border: 'none',
-          fontSize: '.8vw',
+          fontSize: '1vw',
           fontFamily: 'Arial, Helvetica, sans-serif',
           textTransform: 'uppercase',
           letterSpacing: '0.5em',
@@ -98,21 +110,26 @@ export default function CloudHero() {
       >
         {isStormy ? 'Switch to Sunny' : 'Switch to Stormy'}
       </button>
-
+      )}
       <Canvas
       style={{ position: 'fixed', top: 0, left: 0, zIndex: 0 }}
       shadows
-      camera={{ position: [20, 10, 20], fov: 100 }} >
-        {/* <Model /> */}
+      camera={{ position: [20, 10, 20], fov: 100 }} enableZoom={false}>
+        <CameraControls
+         enableZoom={false}
+         enableRotate={false}
+         maxAzimuthAngle={Math.PI / 2}
+         minAzimuthAngle={-Math.PI / 2}
+         maxPolarAngle={Math.PI / 2}
+         minPolarAngle={Math.PI / 2}
+        />
         <Suspense fallback={null}>
         <Sky stormProgress={stormProgress} />
         <ambientLight intensity={1 - stormProgress * 0.5} />
         <spotLight position={[0, 10, 0]} decay={0} distance={45} penumbra={-1} intensity={10} />
         <spotLight position={[-50, 0, 10]} color="red" angle={0.15} decay={0} penumbra={-5} intensity={20} />
         <spotLight position={[50, -10, 10]} color="red" angle={0.4} decay={0} penumbra={-1} intensity={30} />
-        {/* <CameraControls /> */}
         </Suspense>
-        <Projects />
       </Canvas>
     </div>
   )
@@ -128,7 +145,7 @@ function Sky({ stormProgress }) {
     opacity: 0,
     fade: 1,
     growth: 4,
-    speed: 0.1,
+    speed: 0.2,
   }
 
   const sunPosition = useMemo(() => {
@@ -142,7 +159,7 @@ function Sky({ stormProgress }) {
   useFrame((state, delta) => {
     ref.current.rotation.y = Math.cos(state.clock.elapsedTime / 4) / 8
     ref.current.rotation.x = Math.sin(state.clock.elapsedTime / 4) / 8
-    cloud0.current.rotation.y -= delta * 0.0025
+    cloud0.current.rotation.y -= delta * 0.005
   })
 
   return (

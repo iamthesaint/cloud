@@ -1,6 +1,4 @@
 import CloudHero from '/CloudHero.jsx'
-import Name from '/Name.jsx'
-import Projects from '/Projects.jsx'
 import { useEffect } from 'react'
 
 export default function App() {
@@ -12,15 +10,9 @@ export default function App() {
   return (
     <>
     <div>
-      <section id="hero" style={{ height: '70vh' }}>
+      <section id="hero" className='hero'>
         <CloudHero setStormProgress />
-      </section>
-        <section id="name-section" className='name-section'>
-          <Name />
         </section>
-        {/* <section id="projects-section" style={{ height: '100vh' }}>
-          <Projects />
-        </section> */}
       </div>
       </>
   )
