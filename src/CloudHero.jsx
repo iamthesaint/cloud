@@ -114,14 +114,16 @@ export default function CloudHero() {
       <Canvas
       style={{ position: 'fixed', top: 0, left: 0, zIndex: 0 }}
       shadows
-      camera={{ position: [20, 10, 20], fov: 100 }} enableZoom={false}>
+      camera={{ position: [20, 10, 20], fov: 100 }}
+      onWheel={e => e.preventDefault()}
+      >
         <CameraControls
          enableZoom={false}
-         enableRotate={false}
          maxAzimuthAngle={Math.PI / 2}
          minAzimuthAngle={-Math.PI / 2}
          maxPolarAngle={Math.PI / 2}
          minPolarAngle={Math.PI / 2}
+         maxDistance={100}
         />
         <Suspense fallback={null}>
         <Sky stormProgress={stormProgress} />
