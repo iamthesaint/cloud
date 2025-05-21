@@ -92,7 +92,7 @@ export default function CloudHero() {
           top: '50%',
           left: '50%',
           transform: 'translateX(-50%)',
-          fontSize: '1vw',
+          fontSize: 'clamp(1rem, 1vw, 2rem)',
           backgroundColor: 'transparent',
           padding: '1rem 2rem',
           border: 'none',
@@ -121,7 +121,7 @@ export default function CloudHero() {
           padding: '10px 20px',
           backgroundColor: 'transparent',
           border: 'none',
-          fontSize: '1vw',
+          fontSize: 'clamp(1rem, 1vw, 2rem)',
           fontFamily: 'Arial, Helvetica, sans-serif',
           textTransform: 'uppercase',
           letterSpacing: '0.5em',
@@ -133,6 +133,26 @@ export default function CloudHero() {
         {isStormy ? 'Switch to Sunny' : 'Switch to Stormy'}
       </button>
       )}
+      <div
+        style={{
+          position: 'fixed',
+          bottom: '20px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          fontSize: 'clamp(1rem, 1vw, 2rem)',
+          backgroundColor: 'transparent',
+          padding: '0',
+          border: 'none',
+          zIndex: 30,
+          fontFamily: 'Arial, Helvetica, sans-serif',
+          letterSpacing: '0.2em',
+          color: 'rgba(0, 0, 0, 0.4)',
+          fontWeight: '100',
+          textAlign: 'center',
+        }}
+        >
+          scroll to zoom and click to pan
+        </div>
       <Canvas
       style={{ position: 'fixed', top: 0, left: 0, zIndex: 0 }}
       shadows
