@@ -9,22 +9,22 @@ export default function CloudHero() {
   const [stormProgress, setStormProgress] = useState(0)
   const [isStormy, setIsStormy] = useState(false)
   const [showButton, setShowButton] = useState(false)
+  const [message, setMessage] = useState('a storm is coming...')
   const lightningRef = useRef()
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowButton(true)
-    }, 10000)
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setShowButton(true)
+  //   }, 10000)
 
-    return () => clearTimeout(timer)
-  }, [])
+  //   return () => clearTimeout(timer)
+  // }, [])
 
   // lightning > stormy on mount
   useEffect(() => {
     const triggerLightningAndStorm = () => {
       const flash = lightningRef.current
       const obj = { value: 0 }
-
       const timeline = gsap.timeline()
 
       timeline
@@ -57,7 +57,8 @@ export default function CloudHero() {
               },
               onComplete: () => {
                 setIsStormy(true)
-
+                setMessage('')
+                setShowButton(true)
               },
             })
           },
@@ -85,6 +86,26 @@ export default function CloudHero() {
   return (
     <div className="hero">
       <LightningOverlay ref={lightningRef} />
+      {message && (
+        <div className="storm-message" style={{
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          fontSize: '1vw',
+          backgroundColor: 'transparent',
+          padding: '1rem 2rem',
+          border: 'none',
+          zIndex: 30,
+          fontFamily: 'Arial, Helvetica, sans-serif',
+          textTransform: 'uppercase',
+          letterSpacing: '0.5em',
+          color: 'rgba(0, 0, 0, 0.4)',
+          fontWeight: '100',
+        }}>
+          {message}
+        </div>
+      )}
       {showButton && (
       <button
         className="storm-button"
@@ -105,6 +126,7 @@ export default function CloudHero() {
           textTransform: 'uppercase',
           letterSpacing: '0.5em',
           color: 'rgba(0, 0, 0, 0.4)',
+          textDecoration: 'underline',
           fontWeight: '100',
         }}
       >
