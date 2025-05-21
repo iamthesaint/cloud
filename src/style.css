@@ -23,14 +23,5 @@ body,
 }
 
 .storm-button {
-  animation: opacity 3s ease-in-out infinite alternate;
-}
-
-@keyframes opacity {
-  from {
-    opacity: 0.5;
-  }
-  to {
-    opacity: 1;
-  }
+  animation: fadeIn 5s ease-in-out;
 }
