@@ -12,14 +12,6 @@ export default function CloudHero() {
   const [message, setMessage] = useState('a storm is coming...')
   const lightningRef = useRef()
 
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setShowButton(true)
-  //   }, 10000)
-
-  //   return () => clearTimeout(timer)
-  // }, [])
-
   // lightning > stormy on mount
   useEffect(() => {
     const triggerLightningAndStorm = () => {
